@@ -155,6 +155,13 @@
 		margin-bottom: 34px;
 	}
 
+	.header-title-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+	}
+
 	.logo {
 		display: inline-flex;
 		align-items: center;
@@ -174,6 +181,27 @@
 		font-weight: 750;
 		letter-spacing: 0;
 		line-height: 1.18;
+	}
+
+	.api-key-change {
+		flex-shrink: 0;
+		min-height: 40px;
+		padding: 0 12px;
+		border: 1px solid #454545;
+		border-radius: 10px;
+		background: #333333;
+		color: #cccccc;
+		font: inherit;
+		font-size: 13px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: background 0.2s, color 0.2s, border-color 0.2s;
+	}
+
+	.api-key-change:hover {
+		border-color: var(--accent);
+		background: #2a2d2e;
+		color: #75beff;
 	}
 
 	.description {
@@ -474,7 +502,7 @@
 		}
 
 		h1 {
-			font-size: 32px;
+			font-size: 28px;
 		}
 
 		.input-bar {
@@ -524,9 +552,14 @@
 		<div class="logo">
 		</div>
 
-		<h1>
-			변수명 생성기
-		</h1>
+		<div class="header-title-row">
+			<h1>
+				변수명 생성기
+			</h1>
+			<button class="api-key-change" id="changeApiKeyButton" type="button">
+				API 키 변경
+			</button>
+		</div>
 
 		<p class="description">
 			영어 변수명 추천 웹사이트
@@ -832,6 +865,9 @@
 	const apiKeyInput =
 		document.getElementById("apiKeyInput");
 
+	const changeApiKeyButton =
+		document.getElementById("changeApiKeyButton");
+
 	const setupError =
 		document.getElementById("setupError");
 
@@ -858,6 +894,14 @@
 		setupScreen.hidden = true;
 		app.hidden = false;
 	}
+
+	changeApiKeyButton.addEventListener("click", () => {
+		apiKeyInput.value = "";
+		setupError.textContent = "";
+		app.hidden = true;
+		setupScreen.hidden = false;
+		apiKeyInput.focus();
+	});
 
 	try {
 		apiKey = localStorage.getItem(API_KEY_STORAGE_KEY)?.trim() || "";
